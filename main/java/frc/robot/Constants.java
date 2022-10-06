@@ -53,13 +53,15 @@ public final class Constants {
     }
 
     public static class ControllerConstants { // FIX VALUES SUJAY
-        public static final int LEFT_JOYSTICK = 0;
-        public static final int RIGHT_JOYSTICK = 0;
+        public static final int LEFT_X = 0;
+        public static final int LEFT_Y = 1;
+        public static final int RIGHT_X = 0;
+        public static final int RIGHT_Y = 0;
 
-        public static final int YELLOW_BUTTON = 0;
-        public static final int RED_BUTTON = 0;
-        public static final int GREEN_BUTTON = 0;
-        public static final int BLUE_BUTTON = 0;
+        public static final int YELLOW_BUTTON = 4;
+        public static final int RED_BUTTON = 2;
+        public static final int GREEN_BUTTON = 1;
+        public static final int BLUE_BUTTON = 3;
 
         public static final int LEFT_TRIGGER = 0;
         public static final int RIGHT_TRIGGER = 0;
