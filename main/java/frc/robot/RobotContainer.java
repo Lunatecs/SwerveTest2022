@@ -6,9 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -19,15 +17,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  
   public final DrivetrainSubsystem swerveDrive = new DrivetrainSubsystem();
+  public final Joystick driver = new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    swerveDrive.SetFieldRelative(true);
+
     configureButtonBindings();
+    configureDefaultCommands();
 
 
     
@@ -39,6 +39,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
+  public void configureDefaultCommands() {
+    swerveDrive.setDefaultCommand(new SwerveModule(driveMotorChannel, turningMotorChannel, turningEncoder, encoderOffset));
+  }
+
   private void configureButtonBindings() {
 
 
@@ -54,27 +59,27 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autoCommand; //cgange
   }
 
 
   public void driveWithJoystick(boolean fieldRelative) {
     // Get the x speed or forward speed
 
-    double xSpeed = (-m_controller.getRawAxis(x)) * Constants.DriveTrainConstants.kMaxSpeed;
+    double xSpeed = (-controller.getRawAxis(x)) * Constants.DriveTrainConstants.kMaxSpeed;
 
     // Get the y speed or sideways/strafe speed.
-    double ySpeed = -m_controller.getRawAxis(y) * Constants.DriveTrainConstants.kMaxSpeed;
+    double ySpeed = -controller.getRawAxis(y) * Constants.DriveTrainConstants.kMaxSpeed;
     if(Math.abs(ySpeed) < 0.15){
         ySpeed = 0;
     }
 
     // Get the rate of angular rotation.
-    double rot = -m_controller.getRawAxis(r) * Constants.DriveTrainConstants.kMaxAngularSpeed;
+    double rot = -controller.getRawAxis(r) * Constants.DriveTrainConstants.kMaxAngularSpeed;
 
     // Increase max speed by throttle axis (inverted and add one makes the axis from 1 to 2)
     if (t != -1) {
-        double throttle = (-m_controller.getRawAxis(t) + 1);
+        double throttle = (-controller.getRawAxis(t) + 1);
         swerveDrive.setMaxSpeed(throttle);
     }
 
